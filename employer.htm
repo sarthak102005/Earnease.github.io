@@ -1,0 +1,185 @@
+<!-- Updated Employer Top-Up Account Page with Transaction Success and Balance Update Feature -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earnease - Top-Up Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F8FF; /* Updated background color */
+            margin: 0;
+            padding: 0;
+            color: #333; /* Text color */
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #005B96; /* Horizontal Dashboard */
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .title {
+            margin-top: 20px;
+            text-align: center;
+            color: #004080; /* Adjusted title color */
+        }
+        .balance-overview {
+            text-align: center;
+            background-color: #E6F7FF; /* Lighter blue background */
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+        .payment-details {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #D9D9D9;
+            border-radius: 4px;
+        }
+        .btn {
+            background-color: #28A745; /* Green color for the employer's button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #218838; /* Darker green for hover */
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #E6F7FF;
+            margin-top: 20px;
+            border-top: 1px solid #D9D9D9;
+        }
+        /* Styles for the success page */
+        #success-page {
+            display: none;
+            text-align: center;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .tick {
+            font-size: 50px;
+            color: #28A745; /* Green tick color */
+        }
+    </style>
+    <script>
+        // Initial balance
+        let currentBalance = 50000; // Starting balance: ₹50,000
+
+        function displayBalance() {
+            document.getElementById('balance-overview').innerText = `Current Balance: ₹${currentBalance.toLocaleString()}`;
+        }
+
+        function processPayment() {
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            // Check if amount is valid
+            if (isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid amount to top-up.');
+                return;
+            }
+
+            // Update the current balance
+            currentBalance += amount;
+            displayBalance();
+
+            // Hide the payment details form
+            document.getElementById('payment-section').style.display = 'none';
+            
+            // Show the success page
+            document.getElementById('success-page').style.display = 'block';
+            document.getElementById('success-message').innerText = `₹${amount.toLocaleString()} has been successfully added to your account.`;
+        }
+
+        // Initialize balance display on page load
+        window.onload = displayBalance;
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div>Earnease</div>
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Transactions</a>
+            <a href="#">Account Settings</a>
+            <a href="#">Help</a>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="title">Add Funds to Your Account</h2>
+        <div class="balance-overview" id="balance-overview">Current Balance: ₹50,000</div>
+        <div class="payment-details" id="payment-section">
+            <div class="input-group">
+                <label for="amount">Amount to Top-Up:</label>
+                <input type="number" id="amount" placeholder="Enter amount in ₹">
+            </div>
+            <div class="input-group">
+                <label for="payment-method">Payment Method:</label>
+                <select id="payment-method">
+                    <option disabled selected>Select Payment Method</option>
+                    <optgroup label="Net Banking">
+                        <option>Retail Net Banking</option>
+                        <option>Corporate Net Banking</option>
+                    </optgroup>
+                    <option>Credit Card</option>
+                    <option>Debit Card</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="promo-code">Promo Code (Optional):</label>
+                <input type="text" id="promo-code" placeholder="Enter promo code">
+            </div>
+            <button class="btn" onclick="processPayment()">Add Funds</button>
+        </div>
+        <div id="success-page">
+            <div class="tick">✔</div>
+            <h3>Transaction Successful!</h3>
+            <p id="success-message"></p>
+            <button class="btn" onclick="window.location.reload()">Back to Dashboard</button>
+        </div>
+    </div>
+    <div class="footer">
+        <p>Privacy Policy | Terms of Service | Contact Support</p>
+        <p>© Earnease 2024</p>
+    </div>
+</body>
+</html>
